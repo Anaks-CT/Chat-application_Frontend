@@ -1,4 +1,4 @@
-import React from 'react'
+import { Button } from '@chakra-ui/react'
 
 const Login = () => {
   return (
@@ -19,10 +19,13 @@ const Login = () => {
                 </div>
                 <a href="#" className="text-xs text-gray-600 hover:underline">Forget Password?</a>
                 <div className="mt-6">
-                    <button
-                        className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
-                        Login
-                    </button>
+                <Button
+                background={"blue"}
+                color={"white"}
+                className={`w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600`}
+              >
+                Sign Up
+              </Button>
                 </div>
                 </div>
         </form>
