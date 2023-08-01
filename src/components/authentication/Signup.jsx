@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { Button } from "@chakra-ui/button";
 import axios from "axios";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 
 const Signup = () => {
   // toggling the password showing
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-
   // state for all the inputs
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -95,6 +94,7 @@ const Signup = () => {
       toastify("Registration Successful", "success");
       localStorage.setItem("userInfo", JSON.stringify(data));
       history.push("/chats");
+        
     } catch (error) {
         console.log(error)
         toastify(error?.response?.data?.message, "error");
