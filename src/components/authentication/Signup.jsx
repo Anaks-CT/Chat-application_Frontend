@@ -130,7 +130,7 @@ const Signup = () => {
           <div className="mt-2">
             <div className="relative">
               <span
-                className="absolute text-blue-400 top-9 right-4"
+                className="absolute text-blue-400 top-9 right-4 cursor-pointer"
                 onClick={handleClick}
               >
                 {!show ? "Show" : "Hide"}
@@ -146,7 +146,7 @@ const Signup = () => {
             </div>
             <div className="mt-2 relative">
               <span
-                className="absolute text-blue-400 top-9 right-4"
+                className="absolute text-blue-400 top-9 right-4 cursor-pointer"
                 onClick={handleClick}
               >
                 {!show ? "Show" : "Hide"}

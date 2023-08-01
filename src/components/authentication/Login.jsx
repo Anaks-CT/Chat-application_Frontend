@@ -80,7 +80,7 @@ const Login = () => {
           <div className="mt-4">
             <div className="relative">
               <span
-                className="absolute text-blue-400 top-9 right-4"
+                className="absolute text-blue-400 top-9 right-4 cursor-pointer"
                 onClick={handleClick}
               >
                 {!show ? "Show" : "Hide"}
@@ -89,9 +89,9 @@ const Login = () => {
                 Password*
               </label>
               <input
+                type={show ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                type="password"
                 className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
