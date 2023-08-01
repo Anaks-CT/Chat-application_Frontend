@@ -21,12 +21,15 @@ import {
 } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import ProfileModal from "./ProfileModal";
 import UserListItem from "../userAvatar/UserListItem";
 import ChatLoading from "./ChatLoading";
 import { ChatState } from "../../context/ChatProvider";
+import { getSender } from "../../config/ChatLogic";
+import NotificationBadge from "react-notification-badge/lib/components/NotificationBadge";
+import { Effect } from "react-notification-badge";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -39,7 +42,7 @@ const SideDrawer = () => {
     notification,
     setNotification,
     chats,
-    setChats,
+    setChats
   } = ChatState();
   // accessing data from vaalio store
 
@@ -106,12 +109,15 @@ const SideDrawer = () => {
         },
       };
       const { data } = await axios.post(`http://localhost:8000/api/chat`, { userId }, config);
-
-      if (!chats.find((c) => c._id === data._id)) chats([data, ...chats]);
+      console.log(data)
+      if(chats){
+        if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      }
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
     } catch (error) {
+      console.log(error)
       toast({
         title: "Error fetching the chat",
         description: error.message,
@@ -137,7 +143,7 @@ const SideDrawer = () => {
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
             <i className="fas fa-search"></i>
-            <Text d={{ base: "none", md: "flex" }} px={4} backgroundColor={"Highlight"} padding={"3"} className="rounded">
+            <Text display={{ base: "none", md: "flex" }} px={4} backgroundColor={"Highlight"} padding={"3"} className="rounded ">
               Search User
             </Text>
           </Button>
@@ -148,13 +154,13 @@ const SideDrawer = () => {
         <div>
           <Menu>
             <MenuButton p={1}>
-              {/* <NotificationBadge
+              <NotificationBadge
                 count={notification.length}
                 effect={Effect.SCALE}
               />
-              <BellIcon fontSize="2xl" m={1} /> */}
+              <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
-            {/* <MenuList pl={2}>
+            <MenuList pl={2}>
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
@@ -169,7 +175,7 @@ const SideDrawer = () => {
                     : `New Message from ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
               ))}
-            </MenuList> */}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>

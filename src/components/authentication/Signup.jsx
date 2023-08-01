@@ -13,8 +13,9 @@ const Signup = () => {
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
-  const [pic, setPic] = useState();
+  // const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
+  const [picFromInput, setPicFromInput] = useState()
 
   const history = useHistory();
 
@@ -31,37 +32,12 @@ const Signup = () => {
   )
 }
   // uploading the image in cloudinary
-  const postDetails = (pics) => {
-    setPicLoading(true);
-    if (pics === undefined) {
-      toastify("Please Select an Image!", "warning");
-      return;
-    }
-    console.log(pics);
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "chit-chat");
-      data.append("cloud_name", "dhcvbjebj");
-      fetch("https://api.cloudinary.com/v1_1/dhcvbjebj/image/upload", {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPic(data.url.toString());
-          console.log(data.url.toString());
-        })
-        .catch((err) => console.log(err))
-        .finally(() => setPicLoading(false));
-    } else {
-      toastify("Please Select an Image!", "warning");
-      setPicLoading(false);
-      return;
-    }
-  };
+  // const postDetails = async (pics) => {
+  //   setPicLoading(true);
+    
+  // };
 
-  const submitHandler = async () => {
+  const submitHandler = async (pics) => {
     setPicLoading(true);
     if (!name || !email || !password || !confirmpassword) {
       toastify("Please Fill all the Feilds", "warning");
@@ -73,28 +49,56 @@ const Signup = () => {
       setPicLoading(false);
       return;
     }
-    console.log(name, email, password, pic);
+    // console.log(name, email, password, pic);
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "http://localhost:8000/api/user",
-        {
-          name,
-          email,
-          password,
-          pic,
-        },
-        config
-      );
-      console.log(data);
-      toastify("Registration Successful", "success");
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      history.push("/chats");
-        
+      if (pics === undefined) {
+        toastify("Please Select an Image!", "warning");
+        return;
+      }
+      console.log(pics);
+      if (pics.type === "image/jpeg" || pics.type === "image/png") {
+        const data = new FormData();
+        data.append("file", pics);
+        data.append("upload_preset", "resortManagemen");
+        data.append("cloud_name", "dhcvbjebj");
+        fetch("https://api.cloudinary.com/v1_1/dhcvbjebj/image/upload", {
+          method: "post",
+          body: data,
+        })
+          .then((res) => res.json())
+          .then(async(cloudresponse) => {
+            const pic = cloudresponse.url.toString()
+            const config = {
+              headers: {
+                "Content-type": "application/json",
+              },
+            };
+            const { data } = await axios.post(
+              "http://localhost:8000/api/user",
+              {
+                name,
+                email,
+                password,
+                pic,
+              },
+              config
+            );
+            console.log(data);
+            toastify("Registration Successful", "success");
+            localStorage.setItem("userInfo", JSON.stringify(data));
+            history.push("/chats");
+              
+            // setPic(data.url.toString());
+            // console.log(data.url.toString());
+          })
+          .catch((err) => console.log(err))
+          .finally(() => setPicLoading(false));
+      } else {
+        toastify("Please Select an Image!", "warning");
+        setPicLoading(false);
+        return;
+      }
+      
     } catch (error) {
         console.log(error)
         toastify(error?.response?.data?.message, "error");
@@ -170,13 +174,13 @@ const Signup = () => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => postDetails(e.target.files[0])}
+                onChange={(e) => setPicFromInput(e.target.files[0])}
                 className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
             <div className="mt-6">
               <Button
-              onClick={submitHandler}
+              onClick={() => submitHandler(picFromInput)}
                 background={"blue"}
                 color={"white"}
                 className={`w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600`}
