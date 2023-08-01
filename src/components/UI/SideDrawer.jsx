@@ -19,7 +19,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { BellIcon, ChevronDownIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router";
@@ -142,8 +142,8 @@ const SideDrawer = () => {
       >
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
-            <i className="fas fa-search"></i>
-            <Text display={{ base: "none", md: "flex" }} px={4} backgroundColor={"Highlight"} padding={"3"} className="rounded ">
+            <i className="fas fa-search sm:hidden block"><ArrowRightIcon/></i>
+            <Text display={{ base: "none", md: "flex" }} px={4} backgroundColor={"blue.300"} padding={"3"} className="rounded ">
               Search User
             </Text>
           </Button>
