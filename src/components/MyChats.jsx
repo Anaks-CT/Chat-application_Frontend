@@ -8,6 +8,7 @@ import { Button } from "@chakra-ui/react";
 import { ChatState } from "../context/ChatProvider";
 import ChatLoading from "./UI/ChatLoading";
 import GroupChatModal from "./UI/GroupChatModal";
+import { chatWallpaper } from "../assets";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -50,10 +51,11 @@ const MyChats = ({ fetchAgain }) => {
       flexDir="column"
       alignItems="center"
       padding={3}
-      bg="white"
+      bg="black"
       width={{ base: "100%", md: "31%" }}
       borderRadius="lg"
       borderWidth="1px"
+      color={'white'}
     >
       <Box
         pb={3}
@@ -72,6 +74,7 @@ const MyChats = ({ fetchAgain }) => {
             display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
+            color={'black'}
           >
             New Group Chat
           </Button>
@@ -86,6 +89,11 @@ const MyChats = ({ fetchAgain }) => {
         height="100%"
         borderRadius="lg"
         overflowY="hidden"
+        backgroundImage={chatWallpaper}
+        backgroundRepeat={"no-repeat"}
+        backgroundPosition={"center"}
+        backgroundSize={"cover"}
+        className="bg-cover bg-center bg-no-repeat"
       >
         {chats ? (
           <Stack overflowY="scroll">
@@ -93,7 +101,7 @@ const MyChats = ({ fetchAgain }) => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                bg={selectedChat === chat ? "#36454f" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
                 px={3}
                 py={2}

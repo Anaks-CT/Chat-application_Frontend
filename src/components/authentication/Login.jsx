@@ -1,7 +1,8 @@
 import { Button, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -11,7 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const history = useHistory();
+  // const history = useHistory();
+  const navigate = useNavigate()
 
   const submitHandler = async () => {
     setLoading(true);
@@ -49,7 +51,7 @@ const Login = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      history.push("/chats");
+      navigate("/chats");
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -106,7 +108,7 @@ const Login = () => {
                 isLoading={loading}
                 className={`w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600`}
               >
-                Sign Up
+                Log In
               </Button>
             </div>
           </div>

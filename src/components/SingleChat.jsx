@@ -13,6 +13,8 @@ import io from "socket.io-client";
 import UpdateGroupChatModal from "./UI/UpdateGroupChatModal";
 import { ChatState } from "../context/ChatProvider";
 import { getSender, getSenderFull } from "../config/ChatLogic";
+import {singleChatWallpaper} from '../assets'
+
 const ENDPOINT = "http://localhost:8000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
@@ -169,10 +171,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             display="flex"
             justifyContent={{ base: "space-between" }}
             alignItems="center"
+            backgroundColor={"black"}
+            color={"white"}
           >
             <IconButton
               display={{ base: "flex", md: "none" }}
-              icon={<ArrowBackIcon />}
+              icon={<ArrowBackIcon/>}
               onClick={() => setSelectedChat("")}
             />
             {messages &&
@@ -204,6 +208,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             h="100%"
             borderRadius="lg"
             overflowY="hidden"
+            backgroundImage={singleChatWallpaper}
+            backgroundPosition={"center"}
+            backgroundRepeat={"no-repeat"}
+            backgroundSize={"cover"}
           >
             {loading ? (
               <Spinner
@@ -243,14 +251,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 placeholder="Enter a message.."
                 value={newMessage}
                 onChange={typingHandler}
+                color={"white"}
               />
             </FormControl>
           </Box>
         </>
       ) : (
         // to get socket.io on same page
-        <Box display="flex" alignItems="center" justifyContent="center" h="100%">
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
+        <Box display="flex" alignItems="center" justifyContent="center" h="100%" w="100%" backgroundColor={"black"}>
+          <Text fontSize="3xl" pb={3} fontFamily="Work sans" color={'white'}>
             Click on a user to start chatting
           </Text>
         </Box>

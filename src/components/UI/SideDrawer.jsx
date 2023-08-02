@@ -22,7 +22,8 @@ import {
 import { BellIcon, ChevronDownIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { useState } from "react";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
+import {useNavigate} from 'react-router-dom'
 import ProfileModal from "./ProfileModal";
 import UserListItem from "../userAvatar/UserListItem";
 import ChatLoading from "./ChatLoading";
@@ -47,7 +48,9 @@ const SideDrawer = () => {
   // accessing data from vaalio store
 
 
-  const history = useHistory();
+  // const history = useHistory();
+  const navigate = useNavigate()
+
   const toast = useToast();
 
 
@@ -66,7 +69,7 @@ const SideDrawer = () => {
   // logout function
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
-    history.push("/");
+    navigate("/");
   };
 
   // searching all the users in the side bar
@@ -138,12 +141,14 @@ const SideDrawer = () => {
         w="100%"
         p="5px 10px 5px 10px"
         borderWidth="5px"
+        color={"white"}
+        backgroundColor={"black"}
         className="flex justify-between items-center bg-white px-10 py-5"
       >
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen}>
+          <Button variant="ghost" onClick={onOpen} px={4} backgroundColor={"#36454f"} padding={"3"} className="rounded">
             <i className="fas fa-search sm:hidden block"><ArrowRightIcon/></i>
-            <Text display={{ base: "none", md: "flex" }} px={4} backgroundColor={"blue.300"} padding={"3"} className="rounded ">
+            <Text display={{ base: "none", md: "flex" }} >
               Search User
             </Text>
           </Button>
@@ -152,7 +157,8 @@ const SideDrawer = () => {
           Chit-Chat
         </Text>
         <div>
-          <Menu>
+          <Menu
+          >
             <MenuButton p={1}>
               <NotificationBadge
                 count={notification.length}
@@ -160,7 +166,7 @@ const SideDrawer = () => {
               />
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
-            <MenuList pl={2}>
+            <MenuList pl={2} bg={"black"}>
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
@@ -169,6 +175,7 @@ const SideDrawer = () => {
                     setSelectedChat(notif.chat);
                     setNotification(notification.filter((n) => n !== notif));
                   }}
+                  
                 >
                   {notif.chat.isGroupChat
                     ? `New Message in ${notif.chat.chatName}`
@@ -178,7 +185,7 @@ const SideDrawer = () => {
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
+            <MenuButton as={Button} bg="white" color="black" rightIcon={<ChevronDownIcon />}>
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -186,9 +193,9 @@ const SideDrawer = () => {
                 src={user.pic}
               />
             </MenuButton>
-            <MenuList>
+            <MenuList backgroundColor={"black"}>
               <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>{" "}
+                <MenuItem _hover={"blue"}>My Profile</MenuItem>{" "}
               </ProfileModal>
               <MenuDivider />
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
@@ -197,10 +204,10 @@ const SideDrawer = () => {
         </div>
       </Box>
 
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen} >
         <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
+        <DrawerContent backgroundColor={"black"}>
+          <DrawerHeader borderBottomWidth="1px" color={"white"} dispaly="flex" justifyContent={"center"}>Search Users</DrawerHeader>
           <DrawerBody>
             <Box display="flex" pb={2} >
               <Input
@@ -208,6 +215,7 @@ const SideDrawer = () => {
                 mr={2}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                color={"white"}
               />
               <Button onClick={handleSearch}>Go</Button>
             </Box>
@@ -219,6 +227,7 @@ const SideDrawer = () => {
                   key={user._id}
                   user={user}
                   handleFunction={() => accessChat(user._id)}
+                  _hover={{ bg: "white", svg: { fill: "black" } }}
                 />
               ))
             )}

@@ -131,7 +131,7 @@ import { ChatState } from "../../context/ChatProvider";
   
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent backgroundColor={"black"} color={"white"}>
             <ModalHeader
               fontSize="35px"
               fontFamily="Work sans"
@@ -181,7 +181,7 @@ import { ChatState } from "../../context/ChatProvider";
               )}
             </ModalBody>
             <ModalFooter>
-              <Button onClick={handleSubmit} colorScheme="blue">
+              <Button onClick={handleSubmit} backgroundColor="#36454f">
                 Create Chat
               </Button>
             </ModalFooter>
