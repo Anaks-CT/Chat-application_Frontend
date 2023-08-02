@@ -193,12 +193,12 @@ const SideDrawer = () => {
                 src={user.pic}
               />
             </MenuButton>
-            <MenuList backgroundColor={"black"}>
+            <MenuList backgroundColor={"black"} >
               <ProfileModal user={user}>
-                <MenuItem _hover={"blue"}>My Profile</MenuItem>{" "}
+                <MenuItem _hover={"blue"} backgroundColor={"black"}>My Profile</MenuItem>{" "}
               </ProfileModal>
               <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              <MenuItem onClick={logoutHandler} backgroundColor={"black"} color={"red"}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </div>
