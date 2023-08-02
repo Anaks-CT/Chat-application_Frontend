@@ -31,6 +31,8 @@ import { ChatState } from "../../context/ChatProvider";
 import { getSender } from "../../config/ChatLogic";
 import NotificationBadge from "react-notification-badge/lib/components/NotificationBadge";
 import { Effect } from "react-notification-badge";
+import { motion } from "framer-motion";
+import { slideIn } from "../../utils/motion";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -133,6 +135,7 @@ const SideDrawer = () => {
   };
   return (
     <>
+    <motion.div variants={slideIn("down", "tween", 0.2, 1)}>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -204,6 +207,7 @@ const SideDrawer = () => {
           </Menu>
         </div>
       </Box>
+      </motion.div>
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen} >
         <DrawerOverlay />
