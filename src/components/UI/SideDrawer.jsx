@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { useHistory } from "react-router";
 import {useNavigate} from 'react-router-dom'
 import ProfileModal from "./ProfileModal";
@@ -31,7 +31,7 @@ import { ChatState } from "../../context/ChatProvider";
 import { getSender } from "../../config/ChatLogic";
 import NotificationBadge from "react-notification-badge/lib/components/NotificationBadge";
 import { Effect } from "react-notification-badge";
-import { motion } from "framer-motion";
+import { useAnimation } from "framer-motion";
 import { slideIn } from "../../utils/motion";
 
 const SideDrawer = () => {
@@ -133,9 +133,15 @@ const SideDrawer = () => {
       });
     }
   };
+
+// for mounting animation
+  const controls = useAnimation();
+
+  useEffect(() => {
+    controls.start("show");
+  }, [controls]);
   return (
     <>
-    <motion.div variants={slideIn("down", "tween", 0.2, 1)}>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -147,6 +153,9 @@ const SideDrawer = () => {
         color={"white"}
         backgroundColor={"black"}
         className="flex justify-between items-center bg-white px-10 py-5"
+        variants={slideIn("left", "tween", 0, 1)}
+        initial="hidden"
+        animate={controls}
       >
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen} px={4} backgroundColor={"#36454f"} padding={"3"} className="rounded">
@@ -207,7 +216,6 @@ const SideDrawer = () => {
           </Menu>
         </div>
       </Box>
-      </motion.div>
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen} >
         <DrawerOverlay />

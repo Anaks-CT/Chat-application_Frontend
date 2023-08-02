@@ -1,14 +1,20 @@
 import { Box } from "@chakra-ui/layout";
 import { ChatState } from "../../context/ChatProvider";
 import SingleChat from "../SingleChat";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { slideIn } from "../../utils/motion";
+import { useEffect } from "react";
 
 const Chatbox = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat } = ChatState();
 
+  // for mounting animation
+  const controls = useAnimation();
+
+  useEffect(() => {
+    controls.start("show");
+  }, [controls]);
   return (
-    <motion.div variants={slideIn("left", "tween", 0.2, 1)}>
       <Box
         display={{ base: selectedChat ? "flex" : "none", md: "flex" }}
         alignItems="center"
@@ -20,11 +26,13 @@ const Chatbox = ({ fetchAgain, setFetchAgain }) => {
         backgroundColor={'black'}
         borderColor={"white"}
         p={3}
+        variants={slideIn("left", "tween", 0, 1)}
+      initial="hidden"
+      animate={controls}
       >
         <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} /> 
       </Box>
 
-    </motion.div>
   );
 };
 

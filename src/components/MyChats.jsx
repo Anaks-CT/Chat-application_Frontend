@@ -9,8 +9,8 @@ import { ChatState } from "../context/ChatProvider";
 import ChatLoading from "./UI/ChatLoading";
 import GroupChatModal from "./UI/GroupChatModal";
 import { chatWallpaper } from "../assets";
-import { motion } from "framer-motion";
 import { slideIn } from "../utils/motion";
+import { useAnimation } from "framer-motion";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -50,8 +50,14 @@ const MyChats = ({ fetchAgain }) => {
     // eslint-disable-next-line
   }, [fetchAgain]);
 
+  // for mounting animation
+    const controls = useAnimation();
+  
+    useEffect(() => {
+      controls.start("show");
+    }, [controls]);
+
   return (
-    <motion.div variants={slideIn("right", "tween", 0.2, 1)}>
       <Box
         display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
         flexDir="column"
@@ -62,6 +68,9 @@ const MyChats = ({ fetchAgain }) => {
         borderRadius="lg"
         borderWidth="1px"
         color={"white"}
+        variants={slideIn("left", "tween", 0, 1)}
+        initial="hidden"
+      a nimate={controls}
       >
         <Box
           pb={3}
@@ -135,7 +144,6 @@ const MyChats = ({ fetchAgain }) => {
           )}
         </Box>
       </Box>
-    </motion.div>
   );
 };
 
