@@ -25,7 +25,7 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get("http://localhost:8000/api/chat", config);
+      const { data } = await axios.get("https://chit-chat-6oao.onrender.com/api/chat", config);
       setChats(data);
     } catch (error) {
       toast({

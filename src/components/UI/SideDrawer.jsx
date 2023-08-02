@@ -87,7 +87,7 @@ const SideDrawer = () => {
         },
       };
 
-      const { data } = await axios.get(`http://localhost:8000/api/user?search=${search}`, config);
+      const { data } = await axios.get(`https://chit-chat-6oao.onrender.com/api/user?search=${search}`, config);
 
       setSearchResult(data);
     } catch (error) {
@@ -111,7 +111,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`http://localhost:8000/api/chat`, { userId }, config);
+      const { data } = await axios.post(`https://chit-chat-6oao.onrender.com/api/chat`, { userId }, config);
       console.log(data)
       if(chats){
         if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
